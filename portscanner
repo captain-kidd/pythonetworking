@@ -1,0 +1,30 @@
+portList = [21, 23, 80, 443]
+def ccheck(cHost, cPort):
+  s = socket
+  r = s.socket(s.AF_INET, s.SOCK_STREAM)
+  try:
+    r.connect((cHost, cPort))
+    r.send("scanninurport\r\n")
+    response = r.recv(100)
+    print "[+]port %d/tcp is open." % (tgtPort)
+    print "[+] " + response
+    r.clost()
+  except:
+    print "[-]port %d/tcp is closed." % (tgtPort)
+    r.close()
+def portScanner(cHost, cPorts):
+  s = socket
+  try:
+    cIP = s.gethostbyname(cHost)
+  except:
+    print "[-] Unable to connect to %s: unknown host" % (cHost)
+    return
+  try:
+    cName = s.gethostbyaddr(cIP)
+    print "\n[+] Scanning results for " + tgtName[0]
+  except:
+    print "\n[+] Scanning results for " + tgtIP
+  s.setdefaulttimeout(1)
+  for cPort in cPorts:
+    print "Scanning port " + str(cPort)
+    ccheck(cHost, int(cPort))
